@@ -6,19 +6,20 @@ Fecha: 29/05/2021 */
 
 
 /* A hacer:
-	-Terminar el código para que en caso de que salga 2, 11, 12 o 13, se impriman esos caracteres en las cartas y no sus valores (otra parte de tarjetas usando if?)
 	-Probar en busca de errores
 	-Buscar una forma que cuando el puntaje total sea mayor a 11, si sale As (1) tenga un valor de 1, y el puntaje total es menor, que valga 11
 	-Optimizar programa
-	-Ver una forma de que las cartas puedan ser mayores que las anteriores, especialmente para las cartas de la máquina o crupier
+	- Cambiar espacios al momento de imprimir las carta en con las funciones de tipoDeValor, para que salga acomodado en forma de carta
+	-Añadir nombre de programadores
 */
 
-//54 cartas en total - 2 jokers = 52 cartas a usar (13 de cada categoría)
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-	
+
+//54 cartas en total - 2 jokers = 52 cartas a usar (13 de cada categoría)	
 #define MAX 13
 #define MIN 1
 
@@ -28,12 +29,9 @@ int numeroAzar(int min, int max){
 	srand(time(NULL));
 	//numero = min + rand() % (max+1 - min);
 	numero = rand() % (max-min+1)+min;
-	if (numero>10){
-		numero = 10;
-	}
 	return numero;
 }
-
+//Símbolos de las esquinas de las cartas
 char categoriaAzar( int num){
 	char categoria;
 	switch(num){
@@ -53,7 +51,8 @@ char categoriaAzar( int num){
 	};
 	return categoria;
 }
-	
+
+//Letras en caso de salir una carta de J, Q, R o As
 char valoresAltos(int num){
 	char letra;
 	switch(num){
@@ -71,7 +70,7 @@ char valoresAltos(int num){
 	break;
 	
 	case 13:
-	letra = 'R';
+	letra = 'K';
 	break;	
 	}
 	return letra;
@@ -81,13 +80,25 @@ int puntajesAltos(int num){
 	int valor;
 	switch(num){
 	case 11:
+		valor = 10;
+		break;
 	case 12:
+		valor = 10;
+		break;
 	case 13:
 	valor = 10;
 	 break;	
 	}
 	return valor;
 }
+//Cambiar la salida de la carta en caso de ser J, Q, R o As
+void tipoDeValor(int num){
+	if(num>1 && num<=10)
+		printf("|       %i	  |   \n", num);
+	else
+		printf("|       %c	  |   \n", valoresAltos(num));
+}
+		
 	
 int main(int argc, char *argv[]) {
 	
@@ -110,16 +121,14 @@ int main(int argc, char *argv[]) {
 	int mesaApuesta;
 	
 	//Variable de cartas
+	//Jugador
 	int jugador_puntajeCarta1, jugador_puntajeCarta2;
 	char jugador_categoriaCarta1, jugador_categoriaCarta2;
-	//char jugador_letraCarta1, jugador_letraCarta2;
-	
-	int puntajeCartaExtra[5];
-	char categoriaCartaExtra[5];
-	
+	int puntajeCartaExtra[6];
+	char categoriaCartaExtra[6];
+	//Maquina (crupier)
 	int maquina_puntajeCarta1, maquina_puntajeCarta2;
 	char maquina_categoriaCarta1, maquina_categoriaCarta2;
-	char maquina_letraCarta1, maquina_letraCarta2;
 	
 	printf("======== Juego de simulación de Blackjack ======== \n\n");
 	
@@ -174,47 +183,30 @@ int main(int argc, char *argv[]) {
 			
 			//Generador de cartas de jugador
 			jugador_puntajeCarta1 = numeroAzar(MIN, MAX-j);
-			/*if (jugador_puntajeCarta1 == 1 || jugador_puntajeCarta1 > 10){
-			jugador_letraCarta1 = valoresAltos(jugador_puntajeCarta1);
-			}*/
 			jugador_categoriaCarta1 = categoriaAzar(numeroAzar(1,4-j));
 			j++;
 			
 			jugador_puntajeCarta2 = numeroAzar(MIN, MAX-j);
-			if(jugador_puntajeCarta2 == 1 && jugador_puntajeCarta1>=11)
-			
-			/*if (jugador_puntajeCarta2 == 1 || jugador_puntajeCarta2 > 10){
-				jugador_letraCarta2 = valoresAltos(jugador_puntajeCarta2);
-			}*/
 			jugador_categoriaCarta2 = categoriaAzar(numeroAzar(1,4-j));
 			j++;
 			
 			//Generar cartas de máquina
 			maquina_puntajeCarta1 = numeroAzar(MIN, MAX-j);
-			/*if (maquina_puntajeCarta1 == 1 || maquina_puntajeCarta1 > 10){
-				maquina_letraCarta1 = valoresAltos(maquina_puntajeCarta1);
-			}*/
 			maquina_categoriaCarta1 = categoriaAzar(numeroAzar(1,4-j));
 			j++;
 			
 			maquina_puntajeCarta2 = numeroAzar(MIN, MAX-j);
-			/*if (maquina_puntajeCarta2 == 1 || maquina_puntajeCarta2 > 10){
-				maquina_letraCarta2 = valoresAltos(maquina_puntajeCarta2);
-			}*/
 			maquina_categoriaCarta2 = categoriaAzar(numeroAzar(1,4-j));
 			j++;
 			
+			//Imprimir cartas para el usuario y las de la maquina (crupier)
 			printf("\n\n Cartas del juegador:\n");
 			printf("|=================|   |=================|\n");
 			printf("|	      | %c |   |   	    | %c |\n", jugador_categoriaCarta1, jugador_categoriaCarta2);
 			printf("|  	      ====|   |             ====|\n");
 			printf("|		  |   |			|\n");
 			printf("|		  |   |			|\n");
-			
-			
-			printf("|       %i	  |   |        %i        |\n", jugador_puntajeCarta1, jugador_puntajeCarta2);
-			
-			
+			tipoDeValor(jugador_puntajeCarta1); printf("                      "); tipoDeValor(jugador_puntajeCarta2);  			
 			printf("|		  |   |			|\n");
 			printf("|		  |   |			|\n");
 			printf("|		  |   |			|\n");
@@ -222,18 +214,13 @@ int main(int argc, char *argv[]) {
 			printf("| %c |		  |   | %c |		|\n",jugador_categoriaCarta1, jugador_categoriaCarta2);
 			printf("|=================|   |=================|\n\n");
 		
-			
-			printf("Cartas de la máquina:\n");
+			printf("Cartas del crupier:\n");
 			printf("|=================|   |=================|\n");
 			printf("|	      | %c |   |   	    | X |\n", maquina_categoriaCarta1);
 			printf("|  	      ====|   |             ====|\n");
 			printf("|		  |   |			|\n");
 			printf("|		  |   |			|\n");
-			
-			
-			printf("|       %i	  |   |        X        |\n", maquina_puntajeCarta1);
-			
-			
+			tipoDeValor(maquina_puntajeCarta1); printf("  ");  printf("                      |      X        |\n");
 			printf("|		  |   |			|\n");
 			printf("|		  |   |			|\n");
 			printf("|		  |   |			|\n");
@@ -243,19 +230,20 @@ int main(int argc, char *argv[]) {
 		
 		i=1;
 		
-		if (jugador_categoriaCarta1>10){
-			jugador_categoriaCarta1 = puntajesAltos(jugador_categoriaCarta1);
+		//Otorgar valor de 10 para J, Q, R y As en caso de salir
+		if (jugador_puntajeCarta1>10){
+			jugador_puntajeCarta1 = puntajesAltos(jugador_puntajeCarta1);
 		}
-		if (jugador_categoriaCarta2>10){
-			jugador_categoriaCarta2 = puntajesAltos(jugador_categoriaCarta2);
+		if (jugador_puntajeCarta2>10){
+			jugador_puntajeCarta2 = puntajesAltos(jugador_puntajeCarta2);
 		}
 		puntosJugador = jugador_puntajeCarta1+jugador_puntajeCarta2;
 		
-		if (maquina_categoriaCarta2>10){
-		maquina_categoriaCarta2 = puntajesAltos(maquina_categoriaCarta2);
+		if (maquina_puntajeCarta1>10){
+		maquina_puntajeCarta1 = puntajesAltos(maquina_puntajeCarta1);
 		}
-		if (maquina_categoriaCarta2>10){
-			maquina_categoriaCarta2 = puntajesAltos(maquina_categoriaCarta2);
+		if (maquina_puntajeCarta2>10){
+		maquina_puntajeCarta2 = puntajesAltos(maquina_puntajeCarta2);
 		}
 		puntosMaquina = maquina_puntajeCarta1 + maquina_puntajeCarta2;
 		
@@ -275,22 +263,22 @@ int main(int argc, char *argv[]) {
 				break;
 			
 			case 2:
+				//En caso de pedir una carta extra
 				puntajeCartaExtra[i] = numeroAzar(MIN, MAX-j);
 				j++;
 				categoriaCartaExtra[i] = categoriaAzar(numeroAzar(1,4));
+				if (puntajeCartaExtra[i]>10){
+					puntajeCartaExtra[i] = puntajesAltos(puntajeCartaExtra[i]);
+				}
 				puntosJugador += puntajeCartaExtra[i];
 				
 				printf("|=================|\n");
 				printf("|	      | %c |\n",categoriaCartaExtra[i]);
 				printf("|  	      ====|\n");
 				printf("|		  |\n");
-				printf("|		  |\n");
-				
-				
-				printf("|       %i	  |\n",puntajeCartaExtra[i]);
-				
-				
-				printf("|		  |\n");
+				printf("		  |\n");
+				tipoDeValor(puntajeCartaExtra[i]);   
+				printf("		  |\n");
 				printf("|		  |\n");
 				printf("|		  |\n");
 				printf("|====	          |\n");
@@ -300,25 +288,25 @@ int main(int argc, char *argv[]) {
 				break;
 				
 			case 3:
+				//En caso de pedir una sola carta y doblar la apuesta
 				apuesta *= 2;
 				mesaApuesta *= 2;
 				
 				puntajeCartaExtra[i] = numeroAzar(MIN, MAX-j);
 				j++;
 				categoriaCartaExtra[i] = categoriaAzar(numeroAzar(1,4));
-				puntosJugador += categoriaCartaExtra[i];
+				if (puntajeCartaExtra[i]>10){
+					puntajeCartaExtra[i] = puntajesAltos(puntajeCartaExtra[i]);
+				}
+				puntosJugador += puntajeCartaExtra[i];
 				
 				printf("|=================|\n");
 				printf("|	      | %c |\n",categoriaCartaExtra[i]);
 				printf("|  	      ====|\n");
 				printf("|		  |\n");
-				printf("|		  |\n");
-				
-				
-				printf("|       %i	  |\n",puntajeCartaExtra[i]);
-				
-				
-				printf("|		  |\n");
+				printf("		  |\n");
+				tipoDeValor(puntajeCartaExtra[i]);
+				printf("		  |\n");
 				printf("|		  |\n");
 				printf("|		  |\n");
 				printf("|====	          |\n");
@@ -332,23 +320,21 @@ int main(int argc, char *argv[]) {
 			printf("Puntaje total de jugador: %i \n",puntosJugador);
 			printf("Puntaje total de crupier: %i \n",puntosMaquina);
 			
-			printf("Cartas oculta del crupier:\n");
+			printf("\n Cartas oculta del crupier:\n");
 			printf("|=================|\n");
 			printf("|	      | %c |\n", maquina_categoriaCarta2);
 			printf("|  	      ====|\n");
 			printf("|		  |\n");
 			printf("|		  |\n");
-			
-			
-			printf("|       %i	  |\n", maquina_puntajeCarta2);
-			
-			
+			printf("|    "); tipoDeValor(maquina_puntajeCarta2);	printf("|\n");
 			printf("|		  |\n");
 			printf("|		  |\n");
 			printf("|		  |\n");
 			printf("|====	          |\n");
 			printf("| %c |		  |\n",maquina_categoriaCarta2);
 			printf("|=================|\n\n");
+		
+		//Comprobar si el jugador ganó o perdió la apuesta de esta ronda
 			
 		if(puntosJugador>21){
 			printf("Lastima! Has superado el puntaje de 21, has perdido esta mano (apuesta)\n");
@@ -357,17 +343,17 @@ int main(int argc, char *argv[]) {
 			if(puntosJugador>puntosMaquina){
 				//caso de ganar con Blackjack o 21 exactos
 				if (puntosJugador == 21){
-					mesaApuesta *= 3;
+					apuesta *= 3;
 				}
 				
-				fichas += (mesaApuesta/4); 
+				fichas += apuesta; 
 				printf("\nFelicidades! Has ganado esta mano (apuesta)\n");
-				printf("Has recuperado tu apuesta de esta ronda y obtenido %i fichas\n", mesaApuesta/4);
+				printf("Has recuperado tu apuesta de esta ronda y obtenido %i fichas\n\n", apuesta);
 				
 			}
 		else{
 				printf("\nLastima! Has perdido esta mano (apuesta)\n");
-				printf("Has perdido tu apuesta de %i fichas esta ronda\n", apuesta);
+				printf("Has perdido tu apuesta de %i fichas esta ronda\n\n", apuesta);
 				fichas -= apuesta;
 			}
 		}
@@ -377,9 +363,13 @@ int main(int argc, char *argv[]) {
 			printf("Muchas gracias por jugar!");
 			return 0;
 			}
+			j=0;
 	}	
 	printf("La cantidad de fichas es menor a la necesaria para entrar a una nueva partida\n");
+	if(fichas<0){
+		printf("\n Usted debe %i fichas", -1*fichas);
+	} else{
 	printf("Fichas finales: %i", fichas);
+	}
 	return 0;
 }
-
