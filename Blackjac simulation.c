@@ -6,14 +6,14 @@ Fecha: 29/05/2021 */
 
 
 /* A hacer:
-	-Terminar el cÛdigo para que en caso de que salga 2, 11, 12 o 13, se impriman esos caracteres en las cartas y no sus valores (otra parte de tarjetas usando if?)
+	-Terminar el c√≥digo para que en caso de que salga 2, 11, 12 o 13, se impriman esos caracteres en las cartas y no sus valores (otra parte de tarjetas usando if?)
 	-Probar en busca de errores
 	-Buscar una forma que cuando el puntaje total sea mayor a 11, si sale As (1) tenga un valor de 1, y el puntaje total es menor, que valga 11
 	-Optimizar programa
-	-Ver una forma de que las cartas puedan ser mayores que las anteriores, especialmente para las cartas de la m·quina o crupier
+	-Ver una forma de que las cartas puedan ser mayores que las anteriores, especialmente para las cartas de la m√°quina o crupier
 */
 
-//54 cartas en total - 2 jokers = 52 cartas a usar (13 de cada categorÌa)
+//54 cartas en total - 2 jokers = 52 cartas a usar (13 de cada categor√≠a)
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -22,7 +22,7 @@ Fecha: 29/05/2021 */
 #define MAX 13
 #define MIN 1
 
-//FunciÛn de n˙meros al azar dentro de un rango dado por el usuario
+//Funci√≥n de n√∫meros al azar dentro de un rango dado por el usuario
 int numeroAzar(int min, int max){
 	int numero;
 	srand(time(NULL));
@@ -91,7 +91,7 @@ int puntajesAltos(int num){
 	
 int main(int argc, char *argv[]) {
 	
-	//SimbologÌa para las cartas
+	//Simbolog√≠a para las cartas
 	char corazon = '';
 	char diamante = '';
 	char pica = '';
@@ -121,14 +121,14 @@ int main(int argc, char *argv[]) {
 	char maquina_categoriaCarta1, maquina_categoriaCarta2;
 	char maquina_letraCarta1, maquina_letraCarta2;
 	
-	printf("======== Juego de simulaciÛn de Blackjack ======== \n\n");
+	printf("======== Juego de simulaci√≥n de Blackjack ======== \n\n");
 	
 	printf("El objetivo del Blackjack es obtener una suma total cerca del 21 o igual a 21 sin que supere esta cantidad\n ");
-	printf("Hay un total de 52 cartas, 13 tipos divididos en 4 categorÌas: \n Diamantes %c \n TrÈboles %c \n Picas %c \n Corazones %c \n\n", diamante, trebol ,pica, corazon);
-	printf("El valor de las cartas de cualquier categorÌa esta dada de la siguiente forma: \n");
+	printf("Hay un total de 52 cartas, 13 tipos divididos en 4 categor√≠as: \n Diamantes %c \n Tr√©boles %c \n Picas %c \n Corazones %c \n\n", diamante, trebol ,pica, corazon);
+	printf("El valor de las cartas de cualquier categor√≠a esta dada de la siguiente forma: \n");
 	
 	//Valor de las cartas
-	printf( "Carta: As ---> Valor: 1 u 11 puntos de acuerdo al total hasta el momento \n **Si se tiene una cantidad menor a igual a 10, As tendr· un puntaje de 11, de lo contrario, tendra un puntaje de 1** \n");
+	printf( "Carta: As ---> Valor: 1 u 11 puntos de acuerdo al total hasta el momento \n **Si se tiene una cantidad menor a igual a 10, As tendr√° un puntaje de 11, de lo contrario, tendra un puntaje de 1** \n");
 	for (i=MIN+1;i<=MAX-3;i++){
 		printf( "Carta: %i ---> Valor: %i puntos \n", i, i);
 	}
@@ -138,25 +138,25 @@ int main(int argc, char *argv[]) {
 
 	//Reglas
 	printf("---- REGLAS ----\n ");
-	printf("1. Al iniciar la partida, el jugador podr· ver sus cartas y solo una carta que tenga el crupier, siendo que la segunda permanezca oculta hasta que el jugador termine de pedir cartas");
+	printf("1. Al iniciar la partida, el jugador podr√° ver sus cartas y solo una carta que tenga el crupier, siendo que la segunda permanezca oculta hasta que el jugador termine de pedir cartas");
 	printf("2. El jugador puede pedir la cantidad de cartas que desee una vez haya visto las suyas y las del crupier mientras no se pase de 21\n");
-	printf("3. Al inicio del juego, el jugador contar· con un total de 500 fichas \n");
-	printf("4. Para poder ingresar a la partida, el jugador deber· poner un mÌnimo de 50 fichas para jugar \n");
-	printf("5. Una vez recibida las 2 primeras cartas, el jugador puede decidir si agarrar m·s o quedarse con las 2 que tiene \n");
-	printf("6. El jugador puede incrementar la apuesta antes de iniciar una partida para obtener m·s fichas si gana \n");
-	printf("7. El jugador puede decidir doblar la apuesta al inicio de su turno y automaticamente recibir· una carta m·s \n");
-	printf("8. En caso de que el jugador se quede sin fichas mÌnimas para entrar a la partida, el juego terminar·, por lo que puede decidir retirarse depues de ganar \n\n");
+	printf("3. Al inicio del juego, el jugador contar√° con un total de 500 fichas \n");
+	printf("4. Para poder ingresar a la partida, el jugador deber√° poner un m√≠nimo de 50 fichas para jugar \n");
+	printf("5. Una vez recibida las 2 primeras cartas, el jugador puede decidir si agarrar m√°s o quedarse con las 2 que tiene \n");
+	printf("6. El jugador puede incrementar la apuesta antes de iniciar una partida para obtener m√°s fichas si gana \n");
+	printf("7. El jugador puede decidir doblar la apuesta al inicio de su turno y automaticamente recibir√° una carta m√°s \n");
+	printf("8. En caso de que el jugador se quede sin fichas m√≠nimas para entrar a la partida, el juego terminar√°, por lo que puede decidir retirarse depues de ganar \n\n");
 	
 	printf("---- FICHAS A GANAR ---- \n");
-	printf("En caso de ganar con un Blackjack (21 exactos), se obtendr·n el triple de fichas apostadas \n");
-	printf("En caso de ganar sin haber doblado la apuesta, se obtendr·n las fichas apostadas (las propias y las del crupier\n\n");
+	printf("En caso de ganar con un Blackjack (21 exactos), se obtendr√°n el triple de fichas apostadas \n");
+	printf("En caso de ganar sin haber doblado la apuesta, se obtendr√°n las fichas apostadas (las propias y las del crupier\n\n");
 	
 	while (fichas > 49){
 		printf("Total de fichas: %i \n", fichas);
 		
 		do{
 		salida = 0;
-		printf("øDesea ingresar a una nueva partida? (Si/No)  ");
+		printf("¬øDesea ingresar a una nueva partida? (Si/No)  ");
 		gets(resp);
 		} while ( (strcmp(resp,"No")) && (strcmp(resp,"Si")) );
 		//(strcmp(resp,"si"))!=0
@@ -189,7 +189,7 @@ int main(int argc, char *argv[]) {
 			jugador_categoriaCarta2 = categoriaAzar(numeroAzar(1,4-j));
 			j++;
 			
-			//Generar cartas de m·quina
+			//Generar cartas de m√°quina
 			maquina_puntajeCarta1 = numeroAzar(MIN, MAX-j);
 			/*if (maquina_puntajeCarta1 == 1 || maquina_puntajeCarta1 > 10){
 				maquina_letraCarta1 = valoresAltos(maquina_puntajeCarta1);
@@ -223,7 +223,7 @@ int main(int argc, char *argv[]) {
 			printf("|=================|   |=================|\n\n");
 		
 			
-			printf("Cartas de la m·quina:\n");
+			printf("Cartas de la m√°quina:\n");
 			printf("|=================|   |=================|\n");
 			printf("|	      | %c |   |   	    | X |\n", maquina_categoriaCarta1);
 			printf("|  	      ====|   |             ====|\n");
